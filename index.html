@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Atividade - Correção de Bugs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 0 16px;
+            color: #222;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        section {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        h2 {
+            margin-top: 0;
+            font-size: 1.1rem;
+        }
+
+        input,
+        button {
+            padding: 8px;
+            margin: 4px 0;
+            font-size: 1rem;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .resultado {
+            margin-top: 8px;
+            font-weight: bold;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li button {
+            margin-left: 8px;
+            padding: 2px 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Atividade: Correção de Bugs</h1>
+
+    <!-- Funcionalidade 1: Cálculo de desconto -->
+    <section id="desconto">
+        <h2>1. Calculadora de desconto</h2>
+        <input type="number" id="preco" placeholder="Preço (R$)"><br>
+        <input type="number" id="percentual" placeholder="Desconto (%)"><br>
+        <button onclick="calcularDesconto()">Calcular</button>
+        <div class="resultado" id="resultadoDesconto"></div>
+    </section>
+
+    <!-- Funcionalidade 2: Validação de e-mail -->
+    <section id="email">
+        <h2>2. Validação de e-mail</h2>
+        <input type="text" id="emailInput" placeholder="seu@email.com">
+        <button onclick="validarEmail()">Validar</button>
+        <div class="resultado" id="resultadoEmail"></div>
+    </section>
+
+    <!-- Funcionalidade 3: Lista de tarefas -->
+    <section id="tarefas">
+        <h2>3. Lista de tarefas</h2>
+        <input type="text" id="tarefaInput" placeholder="Nova tarefa">
+        <button onclick="adicionarTarefa()">Adicionar</button>
+        <ul id="listaTarefas"></ul>
+        <div class="resultado" id="totalTarefas">Total: 0 tarefa(s)</div>
+    </section>
+
+    <script>
+        /* ===== Funcionalidade 1: desconto ===== */
+        function calcularDesconto() {
+            const preco = parseFloat(document.getElementById("preco").value);
+            const percentual = parseFloat(document.getElementById("percentual").value);
+            const saida = document.getElementById("resultadoDesconto");
+
+            if (isNaN(preco) || isNaN(percentual)) {
+                saida.textContent = "Preencha os dois campos.";
+                return;
+            }
+
+            const precoFinal = preco - percentual;
+            saida.textContent = "Preço final: R$ " + precoFinal.toFixed(2);
+        }
+
+        /* ===== Funcionalidade 2: e-mail ===== */
+        function validarEmail() {
+            const email = document.getElementById("emailInput").value.trim();
+            const saida = document.getElementById("resultadoEmail");
+
+            const valido = email.length > 0 && email.includes(".");
+
+            saida.textContent = valido ? "E-mail válido ✅" : "E-mail inválido ❌";
+        }
+
+        /* ===== Funcionalidade 3: tarefas ===== */
+        let tarefas = [];
+
+        function adicionarTarefa() {
+            const input = document.getElementById("tarefaInput");
+            const texto = input.value.trim();
+            if (texto === "") return;
+
+            tarefas.push(texto);
+            input.value = "";
+            renderizarTarefas();
+        }
+
+        function removerTarefa(indice) {
+            tarefas.splice(indice + 1, 1);
+            renderizarTarefas();
+        }
+
+        function renderizarTarefas() {
+            const lista = document.getElementById("listaTarefas");
+            lista.innerHTML = "";
+
+            tarefas.forEach(function (tarefa, indice) {
+                const li = document.createElement("li");
+                li.textContent = tarefa;
+
+                const btn = document.createElement("button");
+                btn.textContent = "Remover";
+                btn.onclick = function () { removerTarefa(indice); };
+
+                li.appendChild(btn);
+                lista.appendChild(li);
+            });
+
+            document.getElementById("totalTarefas").textContent =
+                "Total: " + tarefas.length + " tarefa(s)";
+        }
+    </script>
+</body>
+
+</html>

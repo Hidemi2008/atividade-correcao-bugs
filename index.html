@@ -107,7 +107,7 @@
             const email = document.getElementById("emailInput").value.trim();
             const saida = document.getElementById("resultadoEmail");
 
-            const valido = email.length > 0 && email.includes(".");
+            const valido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
             saida.textContent = valido ? "E-mail válido ✅" : "E-mail inválido ❌";
         }

@@ -98,7 +98,7 @@
                 return;
             }
 
-            const precoFinal = preco - percentual;
+            const precoFinal = preco - (preco * percentual / 100);
             saida.textContent = "Preço final: R$ " + precoFinal.toFixed(2);
         }
 
